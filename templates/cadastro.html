@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}"> -->
+    <link rel="stylesheet" href="../static/css/login.css">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div id="container-login">
+        <h1>Registre-se no Bacaxinho</h1>
+        <div id="input-login">
+            <form action="" id="form-login" autocomplete="off">
+                <input type="text" name="username" id="input-username"spellcheck="false" placeholder="Nome de usuário" required>
+                <input type="email" name="email" id="input-email"spellcheck="false" placeholder="Email" required>
+                <input type="password" name="password" id="input-password"spellcheck="false" placeholder="Senha" required>
+                <p id="cadastre-se">Já tem uma conta? <a href="/login">Entre agora!</a></p>
+                <!-- <p id="error-message">Usuário ou senha incorretos!</p> -->
+                <button type="submit" id="btn-entrar">Enviar</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+    //ajax de envio
+    $(document).ready(function() {
+        $('#form-login').submit(function(event) {
+            event.preventDefault();
+            
+            $.ajax({
+                url: '/post_registro',
+                type: 'POST',
+                data: $('#form-login').serialize(),
+                success: function(response) {
+                    alert('cadastrado com sucesso')
+                },
+                error: function(error) {
+                    alert('Erro ao atualizar os dados');
+                }
+            });
+        });
+    });
+
+
+</script>
+
+
+</html>

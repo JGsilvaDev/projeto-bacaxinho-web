@@ -1,0 +1,47 @@
+[
+    {
+        "indice": ["Como você está","como está","como vai","eae tudo na paz","paz"],
+        "funcao": "comoestou()"
+    },
+    {
+        "indice": ["horas","que horas são","quais as horas"],
+        "funcao": "tempo()"
+    },
+    {
+        "indice": ["que dia é hoje","que dia é hj", "dia", "que dia"],
+        "funcao": "data()"
+    },
+    {
+        "indice": ["time","melhor time"],
+        "funcao": "melhortime()"
+    },
+    {
+        "indice": ["modo texto","modo fala"],
+        "funcao": "textMode()"
+    },
+    {
+        "indice": ["quem é você","quem é vc"],
+        "funcao": "quemsoueu()"
+    },
+    {
+        "indice": ["finalizar","desligar","finalize","finaliza"],
+        "funcao": "endapp()"
+    },
+    {
+        "indice": ["apresente","apresentação"],
+        "funcao": "quemsoueu()"
+    },
+    {
+        "indice": ["spotify","spotfi"],
+        "funcao": "spotify()"
+    },
+    {
+        "indice": ["codigo","fonte","codigo fonte"],
+        "funcao": "codigofonte()"
+    },
+    {
+        "indice": ["apresente","apresentação","apresentacao","apresenta","divulgue","divulgação"],
+        "funcao": "apresentacao()"
+    }
+    
+]

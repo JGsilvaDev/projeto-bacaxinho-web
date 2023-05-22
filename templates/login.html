@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}"> -->
+    <link rel="stylesheet" href="../static/css/login.css">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div id="container-login">
+        <h1>Faça login no bacaxinho!</h1>
+        <div id="input-login">
+            <form action="" id="form-login" autocomplete="off">
+
+                <input type="text" name="username" id="input-username"spellcheck="false" placeholder="Nome de usuário" required>
+                <input type="password" name="password" id="input-password"spellcheck="false" placeholder="Senha" required>
+                <p id="cadastre-se">Não tem uma conta? <a href="/cadastro" required>Cadastre-se</a></p>
+                <p id="error-message">Usuário ou senha incorretos!</p>
+                <button type="submit" id="btn-entrar">Enviar</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{{ url_for('static', filename='js/enviarsessao.js') }}"></script>
+
+<script>
+
+    //ajax de envio
+    $(document).ready(function() {
+        $('#form-login').submit(function(event) {
+            event.preventDefault();
+            
+            $.ajax({
+                url: '/post_login',
+                type: 'POST',
+                data: $('#form-login').serialize(),
+                success: function(response) {
+                    if(response.userfound === 0) {
+                        document.getElementById('error-message').style.display = "block";
+                    }
+                    else if(response.userfound === 1) {
+                        let usuario = document.querySelector('#input-username').value
+                        console.log(usuario)
+                        setCookie('username',usuario, expirationDate); //enviando cookie
+                        window.location.href = "/"
+                    }
+                },
+                error: function(error) {
+                    alert('Erro ao atualizar os dados');
+                }
+            });
+        });
+    });
+
+    //ajax de recebimento
+    function getDados() {
+        $.ajax({
+            url: '/get_login',
+                type: 'GET',
+                success: function(response) {
+                    console.log(response.userfound);
+                    
+                },
+                error: function(error) {
+                    console.log('Erro ao obter os dados');
+                }
+            });
+    }
+
+</script>
+
+
+
+</html>

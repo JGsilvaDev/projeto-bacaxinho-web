@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chat.css') }}">
+    <title>Bacaxinho</title>
+</head>
+<body>
+    <div id="container">
+        <div id="title-card">
+            <h1 id="titulo">Olá! Eu sou o bacaxinho</h1>
+        </div>
+        <div id="chat-container-frame">
+            
+            <!-- <div id="user-response" class="text-response"><p>mensagem do usuario</p></div>
+            <div id="bot-response" class="text-response"><p>mensagem do bot</p></div> -->
+       
+        </div>
+
+        <form id="meu_formulario">
+            <div id="input-container">
+                <input type="text" name="usermsg" id="input-text" placeholder="Digite aqui" spellcheck="false" autocomplete="off">
+                <button type="submit">enviar</button>
+            </div>
+        </form>
+    </div>
+
+
+    <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/transicao.js') }}"></script>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+    //ajax de envio
+    $(document).ready(function() {
+        $('#meu_formulario').submit(function(event) {
+            event.preventDefault();  // impede o formulário de ser enviado pelo método padrão (recarregando a página)
+            
+            $.ajax({
+                url: '/atualizar_dados',
+                type: 'POST',
+                data: $('#meu_formulario').serialize(),
+                success: function(response) {
+                    //alert('Dados atualizados com sucesso!');
+                    userSend()
+                    getDados()
+                },
+                error: function(error) {
+                    alert('Erro ao atualizar os dados');
+                }
+            });
+
+            
+        });
+    });
+
+    //ajax de recebimento
+    function getDados() {
+        
+        $.ajax({
+            url: '/obter_dados',
+                type: 'GET',
+                success: function(response) {
+                    console.log(response.retorno);
+                    //resposta do bot
+                    enviarMensagem("bot-response",response.retorno,1000)
+                },
+                error: function(error) {
+                    console.log('Erro ao obter os dados bla bla bla bla');
+                }
+            });
+            
+    }
+
+</script>
+
+<script>
+    function getCookie(name) {
+        var cookies = document.cookie.split(';');
+
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            var cookieName = cookie.split('=')[0];
+            var cookieValue = cookie.split('=')[1];
+
+            if (cookieName === name) {
+                return decodeURIComponent(cookieValue);
+            }
+        }
+
+        return null;
+    }
+
+    window.addEventListener('load',function() {
+        if (getCookie("username") === null) {
+            window.location.href = "/login"
+        }
+    })
+</script>
+
+</html>
+

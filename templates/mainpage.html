@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mainpage</title>
+</head>
+<body>
+    <h3>Página principal</h3>
+    <form id="meu_formulario">
+        <input type="text" name="campo1">
+        <input type="text" name="campo2">
+        <button type="submit">Enviar</button>
+    </form>
+    <button onclick="getDados()">pegar dados</button>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+    //ajax de envio
+    $(document).ready(function() {
+        $('#meu_formulario').submit(function(event) {
+            event.preventDefault();  // impede o formulário de ser enviado pelo método padrão (recarregando a página)
+            
+            $.ajax({
+                url: '/atualizar_dados',
+                type: 'POST',
+                data: $('#meu_formulario').serialize(),
+                success: function(response) {
+                    alert('Dados atualizados com sucesso!');
+                },
+                error: function(error) {
+                    alert('Erro ao atualizar os dados');
+                }
+            });
+
+            
+        });
+    });
+
+    //ajax de recebimento
+    function getDados() {
+        
+        $.ajax({
+            url: '/obter_dados',
+                type: 'GET',
+                success: function(response) {
+                    console.log(response.str1);
+                    console.log(response.str2);
+                },
+                error: function(error) {
+                    console.log('Erro ao obter os dados bla bla bla bla');
+                }
+            });
+            
+    }
+
+</script>
+</html>
