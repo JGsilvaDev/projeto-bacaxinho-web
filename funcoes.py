@@ -14,7 +14,7 @@ from spotipy.oauth2 import SpotifyOAuth
 from googletrans import Translator
 
 from tensorflow.keras.models import load_model
-import leitor_tensorflow as tf
+# import leitor_tensorflow as tf #esse código ainda não foi finalizado
 
 import nltk
 from nltk.corpus import stopwords
