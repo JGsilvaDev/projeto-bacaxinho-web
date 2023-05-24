@@ -5,7 +5,10 @@ from py_scripts import userManager as uman
 import funcoes as fc #funções do bacaxinho
 
 
-retorno = ""
+
+
+retorno = None
+emocao = None
 
 app = Flask(__name__, static_url_path='/static')
 
@@ -38,19 +41,23 @@ def cadastro():
 #form de comunicação
 @app.route('/atualizar_dados', methods=['POST'])
 def atualizar_dados():
-    global retorno
+    global retorno, emocao
     input = request.form['usermsg']
+
     retorno = fc.analisar_input(input)
-    print("")
-    print("bot: "+retorno)
+
+    emocao = fc.analisarFrase(input,9)
+
+    print('o usuario disse: '+input+'e o bot entendeu como: '+emocao)
 
     return jsonify({'status': 'OK'})
 
 #-----------------------------------------------
 @app.route('/obter_dados', methods=['GET'])
 def obter_dados():
-    
-    dados = {'retorno': retorno}
+
+
+    dados = {'retorno': retorno, 'emocao_usuario':emocao}
     return jsonify(dados)
 
 #-----------------------------------------------
@@ -75,6 +82,11 @@ def post_login():
 
     username = request.form['username']
     password = request.form['password']
+
+    fc.identificador_usuario = uman.getId(username,password)
+
+    print(fc.identificador_usuario)
+
 
     return redirect(url_for('get_login', usr = username, pwd=password))
 

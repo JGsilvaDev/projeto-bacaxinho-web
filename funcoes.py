@@ -14,14 +14,19 @@ from spotipy.oauth2 import SpotifyOAuth
 from googletrans import Translator
 
 from tensorflow.keras.models import load_model
-# import leitor_tensorflow as tf #esse código ainda não foi finalizado
+import leitor_tensorflow as tf
 
 import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 
+#nltk.download('punkt')
+# nltk.download('stopwords')
+# nltk.download('wordnet')
+
 import json
+
 
 # texto_fala = py.init()
 
@@ -30,6 +35,37 @@ import json
 text_mode = True
 acordado = False
 bot_name = 'bacaxinho'  # nome do bot
+identificador_usuario = None #nome da tabela da emoção
+
+
+#sentimeto mais recente
+def ultimoSentimento(id):
+
+    if id is None:
+        return
+
+    conn = sqlite3.connect('bacaxinho.db')
+    cursor = conn.cursor()
+
+
+    cursor.execute("SELECT identificador FROM usuario u WHERE u.id = "+str(id))
+    resultado = cursor.fetchall()
+    nomeTabela = resultado[0][0]
+
+    cursor.execute("SELECT id_sentimento FROM "+nomeTabela+" ORDER BY id desc")
+    idsent = cursor.fetchall()
+    id_sentimento = idsent[0][0]
+
+    cursor.execute(
+        "SELECT s.nome FROM sentimento s WHERE s.id = '"+str(id_sentimento)+"'")
+    sent = cursor.fetchall()
+    sentimento = sent[0][0]
+
+
+    return sentimento
+
+#capturando a emoção atual
+emocao_atual = ultimoSentimento(identificador_usuario) #pegar última do banco
 
 # funcoes de configuração
 
@@ -198,14 +234,14 @@ def tradutor(fala):
 
     print(trans.translate(conteudo, dest=codLang).text)
 
-def analisarFrase(str, id):
+#-----------------------------------------------------------------------------
 
+def analisarFrase(texto, user_id):
     model = load_model('baxacinho.0.3')
 
-    frase = str
+    frase = texto
     nova_sequencia = tf.tokenizer.texts_to_sequences([frase])
-    nova_sequencia_padded = tf.pad_sequences(
-        nova_sequencia, maxlen=100, truncating='post', padding='post')
+    nova_sequencia_padded = tf.pad_sequences(nova_sequencia, maxlen=100, truncating='post', padding='post')
     prediction = model.predict(nova_sequencia_padded)[0]
 
     mapping_reverse = {0: 'alegria', 1: 'neutro', 2: 'tristeza', 3: 'raiva'}
@@ -230,7 +266,7 @@ def analisarFrase(str, id):
     conn = sqlite3.connect('bacaxinho.db')
     cursor = conn.cursor()
 
-    cursor.execute("SELECT identificador FROM usuario u WHERE u.id = "+id)
+    cursor.execute("SELECT identificador FROM usuario u WHERE u.id = "+str(user_id))
     resultado = cursor.fetchall()
     nomeTabela = resultado[0][0]
 
@@ -242,10 +278,17 @@ def analisarFrase(str, id):
     dataAtual = datetime.date.today().strftime("%d/%m/%Y")
 
     cursor.execute("INSERT INTO "+nomeTabela +
-                   "(id_usuario,id_sentimento,dt_insercao)VALUES(?,?,?)", (id, id_sentimento, dataAtual))
+                   "(id_usuario,id_sentimento,dt_insercao)VALUES(?,?,?)", (user_id, id_sentimento, dataAtual))
     conn.commit()
+    conn.close()
+
+    emocao_atual = ultimoSentimento(identificador_usuario) #pegar última do banco
+
+    print('---------------------------- O SENTIMENTO É: '+emocao_atual)
 
     return sentimento
+
+#---------------------------------------------------------------------
 
 def analisar_input(input_usuario):
     resposta = ""
@@ -277,28 +320,18 @@ def analisar_input(input_usuario):
                 funcao_executada = True
                 break
 
+
+
+    # #salvando a emoção do usuario
+    # emocao_atual = emoread.analisarFrase(input_usuario,identificador_usuario)
+    
+
+    #retornando resposta
     if not funcao_executada:
         return openia(input_usuario)
     
-    #retornando resposta
     return resposta
 
-def ultimoSentimento(id):
 
-    conn = sqlite3.connect('bacaxinho.db')
-    cursor = conn.cursor()
 
-    cursor.execute("SELECT identificador FROM usuario u WHERE u.id = "+id)
-    resultado = cursor.fetchall()
-    nomeTabela = resultado[0][0]
 
-    cursor.execute("SELECT id_sentimento FROM "+nomeTabela+" ORDER BY id desc")
-    idsent = cursor.fetchall()
-    id_sentimento = idsent[0][0]
-
-    cursor.execute(
-        "SELECT s.nome FROM sentimento s WHERE s.id = '"+str(id_sentimento)+"'")
-    sent = cursor.fetchall()
-    sentimento = sent[0][0]
-
-    return sentimento

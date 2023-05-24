@@ -28,18 +28,24 @@
         </form>
     </div>
 
+    <div id="emocao-container">
+        <p id="emocao"></p>
+    </div>
+
 
     <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
     <script src="{{ url_for('static', filename='js/transicao.js') }}"></script>
 </body>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{{ url_for('static', filename='js/emocoes.js') }}"></script>
 <script>
 
     //ajax de envio
     $(document).ready(function() {
         $('#meu_formulario').submit(function(event) {
             event.preventDefault();  // impede o formulário de ser enviado pelo método padrão (recarregando a página)
+            userSend()
             
             $.ajax({
                 url: '/atualizar_dados',
@@ -47,7 +53,6 @@
                 data: $('#meu_formulario').serialize(),
                 success: function(response) {
                     //alert('Dados atualizados com sucesso!');
-                    userSend()
                     getDados()
                 },
                 error: function(error) {
@@ -69,6 +74,7 @@
                     console.log(response.retorno);
                     //resposta do bot
                     enviarMensagem("bot-response",response.retorno,1000)
+                    atualizar_emocao()
                 },
                 error: function(error) {
                     console.log('Erro ao obter os dados bla bla bla bla');

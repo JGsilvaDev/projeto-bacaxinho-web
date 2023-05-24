@@ -23,7 +23,7 @@ function enviarMensagem(id,mensagem,delay) {
 
 function userSend() {
     enviarMensagem("user-response",input.value,0)
-    input.value = ""
+    // input.value = ""
 }
 
 function scrollDown() {

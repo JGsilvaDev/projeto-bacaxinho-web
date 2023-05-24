@@ -4,6 +4,9 @@ import string
 import hashlib
 import base64
 
+import funcoes as fc
+import datetime
+
 
 #script que gerencia usuários, adicionando lidando com eles
 
@@ -68,8 +71,13 @@ def criaUsuario(usuario,email,senha):
 		FOREIGN KEY (id_sentimento) REFERENCES sentimento(id)
 	)''')
 
+
 	#envia tudo e fecha a conexão
+	cursor.execute("INSERT INTO "+nomeTabela +"(id_usuario,id_sentimento,dt_insercao)VALUES(?,?,?)", (id_usuario, 3, datetime.date.today().strftime("%d/%m/%Y")))
 	conn.commit()
+
+
+
 	conn.close()
 	
 
@@ -102,8 +110,26 @@ def getUsuario(nome,senha):
 	busca = resultado[0][0]
 	conn.close()
 
+
+	#retorno
 	return busca
 
+def getId(nome,senha):
+	#conectando o banco de dados
+	conn = sqlite3.connect('bacaxinho.db')
+	cursor = conn.cursor()
+
+	senhaHASH = criptografar(senha)
+
+	cursor.execute("select id from usuario where nome='"+nome+"' and senha='"+senhaHASH+"'")
+
+	resultado = cursor.fetchall()
+	busca = resultado[0][0]
+	conn.close()
+
+	# print('identificador: '+str(busca))
+
+	return busca
 
 print('script de login importado com sucesso!')
 
