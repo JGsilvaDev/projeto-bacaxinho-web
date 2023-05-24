@@ -4,7 +4,7 @@
 
 # variáveis de comandos
 #AWAKE_COMMANDS = ['bacaxinho', 'abacaxi', 'cachinho', 'cachimbo', 'ximbinha',
-                  'maluco', 'cabeça de lata']
+#                  'maluco', 'cabeça de lata']
 
 #if __name__ == "__main__":
 
