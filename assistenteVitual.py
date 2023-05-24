@@ -1,15 +1,17 @@
-import funcoes as fc
+#Esse script não é mais utilizado
+
+#import funcoes as fc
 
 # variáveis de comandos
-AWAKE_COMMANDS = ['bacaxinho', 'abacaxi', 'cachinho', 'cachimbo', 'ximbinha',
-                  'maluco', 'acorda porra', 'zé ruela', 'cabeça de lata']
+#AWAKE_COMMANDS = ['bacaxinho', 'abacaxi', 'cachinho', 'cachimbo', 'ximbinha',
+                  'maluco', 'cabeça de lata']
 
-if __name__ == "__main__":
+#if __name__ == "__main__":
 
-    id = '9'
+#    id = '9'
 
     # loop principal
-    while True:
+#    while True:
 
         #print('Aguardando chamada...')
         # aguardando chamada
@@ -25,7 +27,7 @@ if __name__ == "__main__":
         #while True:
         print("Escutando...")
 
-        comando=fc.recebeInput()
+ #       comando=fc.recebeInput()
 
         
 
@@ -33,4 +35,4 @@ if __name__ == "__main__":
         # fc.analisarFrase(comando, id)
 
         #função que analisa a melhro resposta
-        print(fc.analisar_input(comando))
+#        print(fc.analisar_input(comando))
