@@ -1,8 +1,10 @@
 from flask import Flask, render_template, request, redirect, jsonify, url_for
 
 from py_scripts import userManager as uman
+from py_scripts import emissorSerial as es
 
 import funcoes as fc #funções do bacaxinho
+
 
 
 
@@ -49,6 +51,8 @@ def atualizar_dados():
     emocao = fc.analisarFrase(input,9)
 
     print('o usuario disse: '+input+'e o bot entendeu como: '+emocao)
+
+    es.enviarSerial(emocao)
 
     return jsonify({'status': 'OK'})
 
@@ -105,4 +109,4 @@ def get_login():
 #endregion
 
 if __name__ == '__main__':
-    app.run(host='localhost')
+    app.run(host='0.0.0.0')
