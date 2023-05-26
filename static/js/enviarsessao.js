@@ -9,9 +9,9 @@ function setCookie(name, value, expires) {
     document.cookie = cookie;
 }
   
-  // data de expiração de 1 semana
+  // data de expiração de 1 minuto
   var expirationDate = new Date();
-  expirationDate.setTime(expirationDate.getTime() + (60 * 60 * 1000));
+  expirationDate.setTime(expirationDate.getTime() + (60 * 1000));
   
 
   

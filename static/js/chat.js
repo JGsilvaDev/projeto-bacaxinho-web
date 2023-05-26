@@ -19,6 +19,7 @@ function enviarMensagem(id,mensagem,delay) {
         addClass()
         return;
     }, delay);
+
 }
 
 function userSend() {

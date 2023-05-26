@@ -86,3 +86,18 @@ body {
 
     margin-top: 10px;
 }
+
+#emocao-container {
+    display: flex;
+    color:white;
+    align-items: center;
+    justify-content: center;
+    height: 20vh;
+
+    /* transform: rotate(90deg); */
+}
+
+#emocao {
+    color:white;
+    font-size: 4.18rem;
+}

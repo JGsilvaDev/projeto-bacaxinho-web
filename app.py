@@ -1,13 +1,23 @@
-from flask import Flask, render_template, request, redirect, jsonify, url_for
+from flask import Flask, render_template, request, redirect, jsonify, url_for, make_response
 
 from py_scripts import userManager as uman
+from py_scripts import emissorSerial as es
 
 import funcoes as fc #funções do bacaxinho
 
 
-retorno = ""
+
+
+
+retorno = None
+emocao = None
 
 app = Flask(__name__, static_url_path='/static')
+
+@app.before_request
+def delete_cookies():
+    response = make_response()
+    response.delete_cookie('username')
 
 
 #region rotas para páginas
@@ -38,19 +48,25 @@ def cadastro():
 #form de comunicação
 @app.route('/atualizar_dados', methods=['POST'])
 def atualizar_dados():
-    global retorno
+    global retorno, emocao
     input = request.form['usermsg']
+
     retorno = fc.analisar_input(input)
-    print("")
-    print("bot: "+retorno)
+
+    emocao = fc.analisarFrase(input,fc.identificador_usuario)
+
+    print('o usuario disse: '+input+'e o bot entendeu como: '+emocao)
+
+    es.enviarSerial(emocao)
 
     return jsonify({'status': 'OK'})
 
 #-----------------------------------------------
 @app.route('/obter_dados', methods=['GET'])
 def obter_dados():
-    
-    dados = {'retorno': retorno}
+
+
+    dados = {'retorno': retorno, 'emocao_usuario':emocao}
     return jsonify(dados)
 
 #-----------------------------------------------
@@ -72,9 +88,14 @@ def post_registro():
 
 @app.route('/post_login', methods=['POST'])
 def post_login():
-
     username = request.form['username']
     password = request.form['password']
+
+    if uman.buscaUsuario(str(username),str(password)) == 1:
+        fc.identificador_usuario = uman.getId(username,password)
+
+    print(fc.identificador_usuario)
+
 
     return redirect(url_for('get_login', usr = username, pwd=password))
 
@@ -92,5 +113,18 @@ def get_login():
 #-----------------------------------------------
 #endregion
 
+# def limpar_cookies():
+#     response = make_response()
+#     response.delete_cookie('username')
+#     return response
+
+# @app.route('/limpar-cookies')
+# def rota_limpar_cookies():
+#     return limpar_cookies()
+
+
+
+
 if __name__ == '__main__':
-    app.run(host='localhost')
+
+    app.run(host='0.0.0.0')
