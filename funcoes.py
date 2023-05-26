@@ -284,7 +284,6 @@ def analisarFrase(texto, user_id):
 
     emocao_atual = ultimoSentimento(identificador_usuario) #pegar última do banco
 
-    print('---------------------------- O SENTIMENTO É: '+emocao_atual)
 
     return sentimento
 

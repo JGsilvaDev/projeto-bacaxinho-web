@@ -2,7 +2,7 @@
 const emocoes = {'alegria':'😄🍍', 'neutro':'😐🍍', 'tristeza':'😢🍍','raiva':'😠🍍'}
 const emo_output = document.querySelector('#emocao')
 
-// emo_output.innerHTML = emocoes['neutro']
+emo_output.innerHTML = emocoes['neutro']
 
 atualizar_emocao()
 

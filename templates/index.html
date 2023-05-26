@@ -45,7 +45,6 @@
     $(document).ready(function() {
         $('#meu_formulario').submit(function(event) {
             event.preventDefault();  // impede o formulário de ser enviado pelo método padrão (recarregando a página)
-            userSend()
             
             $.ajax({
                 url: '/atualizar_dados',
@@ -54,11 +53,14 @@
                 success: function(response) {
                     //alert('Dados atualizados com sucesso!');
                     getDados()
+                    
                 },
                 error: function(error) {
                     alert('Erro ao atualizar os dados');
+
                 }
             });
+            userSend()
 
             
         });
@@ -77,9 +79,9 @@
                     atualizar_emocao()
                 },
                 error: function(error) {
-                    console.log('Erro ao obter os dados bla bla bla bla');
+                    console.log('Erro ao obter os dados');
                 }
-            });
+        });
             
     }
 

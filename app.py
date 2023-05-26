@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, jsonify, url_for
+from flask import Flask, render_template, request, redirect, jsonify, url_for, make_response
 
 from py_scripts import userManager as uman
 from py_scripts import emissorSerial as es
@@ -13,6 +13,11 @@ retorno = None
 emocao = None
 
 app = Flask(__name__, static_url_path='/static')
+
+@app.before_request
+def delete_cookies():
+    response = make_response()
+    response.delete_cookie('username')
 
 
 #region rotas para páginas
@@ -48,7 +53,7 @@ def atualizar_dados():
 
     retorno = fc.analisar_input(input)
 
-    emocao = fc.analisarFrase(input,9)
+    emocao = fc.analisarFrase(input,fc.identificador_usuario)
 
     print('o usuario disse: '+input+'e o bot entendeu como: '+emocao)
 
@@ -83,11 +88,11 @@ def post_registro():
 
 @app.route('/post_login', methods=['POST'])
 def post_login():
-
     username = request.form['username']
     password = request.form['password']
 
-    fc.identificador_usuario = uman.getId(username,password)
+    if uman.buscaUsuario(str(username),str(password)) == 1:
+        fc.identificador_usuario = uman.getId(username,password)
 
     print(fc.identificador_usuario)
 
@@ -108,5 +113,18 @@ def get_login():
 #-----------------------------------------------
 #endregion
 
+# def limpar_cookies():
+#     response = make_response()
+#     response.delete_cookie('username')
+#     return response
+
+# @app.route('/limpar-cookies')
+# def rota_limpar_cookies():
+#     return limpar_cookies()
+
+
+
+
 if __name__ == '__main__':
+
     app.run(host='0.0.0.0')
