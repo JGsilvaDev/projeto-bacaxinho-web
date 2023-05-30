@@ -2,11 +2,11 @@ const chat_frame = document.querySelector('#chat-container-frame')
 let input = document.querySelector('#input-text')
 const mensagem = "Sinto muito, os serviços do bacaxinho ainda não estão disponíveis."
 
-input.addEventListener("keydown", function(event) {
-    if (event.keyCode === 13) {
-        document.getElementById("input-submit").click();
-    }
-})
+// input.addEventListener("keydown", function(event) {
+//     if (event.keyCode === 13) {
+//         document.getElementById("input-submit").click();
+//     }
+// })
 
 function enviarMensagem(id,mensagem,delay) {
     //remove qualquer tag html do texto, uma forma de tratar antes de enviar para a div
@@ -25,6 +25,7 @@ function enviarMensagem(id,mensagem,delay) {
 function userSend() {
     enviarMensagem("user-response",input.value,0)
     input.value = ""
+    document.getElementById('input-text').readOnly = true //desativa o input enquanto bacaxinho está pensando
 }
 
 function scrollDown() {

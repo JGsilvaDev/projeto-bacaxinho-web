@@ -2,9 +2,8 @@
 const emocoes = {'alegria':'😄🍍', 'neutro':'😐🍍', 'tristeza':'😢🍍','raiva':'😠🍍'}
 const emo_output = document.querySelector('#emocao')
 
+// atualizar_emocao()
 emo_output.innerHTML = emocoes['neutro']
-
-atualizar_emocao()
 
 function atualizar_emocao() {
     $.ajax({

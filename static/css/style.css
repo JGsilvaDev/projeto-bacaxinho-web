@@ -1,15 +1,9 @@
 :root {
-    /* --fundo: rgb(44, 44, 94);
-    --letras: rgb(255,255,255);
-    --fundo-chat: rgb(25, 25, 54);
-    --letras: rgb(255,255,255);
-    --user-msg: rgb(4, 126, 0);
-    --bot-msg: rgb(45, 43, 161); */
-    --fundo: rgb(46, 46, 46);
+    --fundo: #2e2e2e;
     --letras: rgb(255,255,255);
     --fundo-chat: rgb(63, 63, 63);
     --letras: rgb(0, 0, 0);
-    --user-msg: rgb(8, 233, 0);
+    --user-msg: #08e900;
     --bot-msg: rgb(46, 46, 46);
     --largura: 75vw;
     --error: rgb(255, 98, 98);
@@ -50,22 +44,26 @@ body {
     outline: none;
     padding:20px;
 }
-#input-container button {
+button {
     width: 9.5%;
     height:100%;
+    
     /* estilo */
     border-style: none;
     background-color: var(--user-msg);
-    border-radius: 0px 0px 20px 0px;
     font-size: 1rem;
 
     transition: background-color 0.2s;
 }
-#input-container button:hover {
+button:hover {
     background-color: var(--bot-msg);
-    border: solid 3px var(--user-msg);
+    box-shadow: inset 0 0 0 3px var(--user-msg);
     color:white;
-    outline: none;
+    outline: none; 
+}
+
+#input-submit {
+    border-radius: 0px 0px 20px 0px;
 }
 
 #container {
@@ -94,10 +92,31 @@ body {
     justify-content: center;
     height: 20vh;
 
-    /* transform: rotate(90deg); */
 }
 
 #emocao {
     color:white;
     font-size: 4.18rem;
+}
+
+#overflow-message {
+    position:absolute;
+    z-index:9999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    width:100%;
+    height: 100%;
+
+    background-color:rgba(0, 0, 0, 0.486);
+
+    display: none;
+
+    transition: all 0.2s;
+}
+#overflow-message * {
+    color:white;
 }
