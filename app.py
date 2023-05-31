@@ -5,12 +5,9 @@ from py_scripts import emissorSerial as es
 
 import funcoes as fc #funções do bacaxinho
 
-
-
-
-
 retorno = None
-emocao = None
+voiceChat = None
+emocao = 'neturo'
 
 app = Flask(__name__, static_url_path='/static')
 
@@ -55,7 +52,7 @@ def atualizar_dados():
 
     emocao = fc.analisarFrase(input,fc.identificador_usuario)
 
-    print('o usuario disse: '+input+'e o bot entendeu como: '+emocao)
+    print('o usuario disse: '+input+' e o bot entendeu como: '+emocao)
 
     es.enviarSerial(emocao)
 
@@ -66,7 +63,7 @@ def atualizar_dados():
 def obter_dados():
 
 
-    dados = {'retorno': retorno, 'emocao_usuario':emocao}
+    dados = {'retorno': retorno, 'emocao_usuario':emocao, 'voice':voiceChat}
     return jsonify(dados)
 
 #-----------------------------------------------
@@ -111,16 +108,29 @@ def get_login():
     return jsonify({'userfound':userfound})
 
 #-----------------------------------------------
+
+@app.route('/get-voice', methods=['POST'])
+def get_voice():
+    global retorno, emocao, voiceChat
+
+    voiceChat = fc.escutarVoz()
+
+    retorno = fc.analisar_input(voiceChat)
+
+    emocao = fc.analisarFrase(voiceChat,fc.identificador_usuario)
+
+    print('o usuario disse: '+voiceChat+' e o bot entendeu como: '+emocao)
+
+    es.enviarSerial(emocao)
+
+    return jsonify({'status':'OK'})
+
+
+
+
+
 #endregion
 
-# def limpar_cookies():
-#     response = make_response()
-#     response.delete_cookie('username')
-#     return response
-
-# @app.route('/limpar-cookies')
-# def rota_limpar_cookies():
-#     return limpar_cookies()
 
 
 

@@ -283,7 +283,7 @@ def analisarFrase(texto, user_id):
     conn.close()
 
     emocao_atual = ultimoSentimento(identificador_usuario) #pegar última do banco
-
+    print('emocao: '+str(sentimento))
 
     return sentimento
 
@@ -332,5 +332,7 @@ def analisar_input(input_usuario):
     return resposta
 
 
+def escutarVoz():
+    retorno = input("voz do usuario >> ")
 
-
+    return retorno

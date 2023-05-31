@@ -48,6 +48,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="{{ url_for('static', filename='js/emocoes.js') }}"></script>
 <script>
+    let sentByVoice = false //boolenan que se altera dependendo
 
     //ajax de envio
     $(document).ready(function() {
@@ -59,8 +60,8 @@
                 type: 'POST',
                 data: $('#meu_formulario').serialize(),
                 success: function(response) {
+                    sentByVoice = false
                     //alert('Dados atualizados com sucesso!');
-
                     getDados()
                 },
                 error: function(error) {
@@ -78,9 +79,15 @@
             url: '/obter_dados',
                 type: 'GET',
                 success: function(response) {
-                    console.log(response.retorno);
-                    //resposta do bot
+                    ouvindo(false)
+
+                    console.log(response)
+
+                    if(sentByVoice) { enviarMensagem("user-response",response.voice,0) }
+
                     enviarMensagem("bot-response",response.retorno,1000)
+                    console.log(response.retorno)
+
                     atualizar_emocao()
 
                     //devolve o controle do input ao usuário
@@ -96,6 +103,7 @@
 </script>
 
 <script>
+    //função que analiza se tem algum usuario logado, caso não, ele automaticamente redireciona o usuario pra página de login
     function getCookie(name) {
         var cookies = document.cookie.split(';');
 
@@ -119,5 +127,23 @@
     })
 </script>
 
-</html>
+<!-- Ajax do botão de voz -->
+<script>
+    $(document).ready(function() {
+        $("#modo-fala").click(function() {
+            $.ajax({
+                url: '/get-voice',  // Rota Flask para chamar a função
+                type: 'POST',
+                success: function(response) {
+                    sentByVoice = true
+                    getDados()
+                },
+                error: function(error) {
+                    console.log(error);  // Exibir erro no console do navegador
+                }
+            });
+        });
+    });
+</script>
 
+</html>
