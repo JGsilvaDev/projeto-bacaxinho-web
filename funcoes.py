@@ -1,4 +1,4 @@
-# import pyttsx3 as py
+import pyttsx3 as py
 import datetime as dt
 import speech_recognition as sr
 import os
@@ -8,10 +8,10 @@ import openai as op
 import sqlite3
 import datetime
 
-import spotipy
-from spotipy.oauth2 import SpotifyOAuth
+# import spotipy
+# from spotipy.oauth2 import SpotifyOAuth
 
-from googletrans import Translator
+# from googletrans import Translator
 
 from tensorflow.keras.models import load_model
 import leitor_tensorflow as tf
@@ -21,14 +21,14 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 
-#nltk.download('punkt')
-# nltk.download('stopwords')
-# nltk.download('wordnet')
+nltk.download('punkt')
+nltk.download('stopwords')
+nltk.download('wordnet')
 
 import json
 
 
-# texto_fala = py.init()
+texto_fala = py.init()
 
 # variáveis de controle
 # modo texto, se for verdadeiro, irá alternar a fala do microfone para modo de teclado
@@ -69,50 +69,49 @@ emocao_atual = ultimoSentimento(identificador_usuario) #pegar última do banco
 
 # funcoes de configuração
 
-# def falar(audio):
+def falar(audio):
 
-#     # print do que o robo falar, para funções de debug
-#     print(bot_name+': ' + audio)
+    # print do que o robo falar, para funções de debug
+    print(bot_name+': ' + audio)
 
-#     rate = texto_fala.getProperty('rate')
-#     texto_fala.setProperty(rate, 999)
+    rate = texto_fala.getProperty('rate')
+    texto_fala.setProperty(rate, 999)
 
-#     rate = texto_fala.getProperty('rate')
-#     texto_fala.setProperty(rate, 120)
+    rate = texto_fala.getProperty('rate')
+    texto_fala.setProperty(rate, 120)
 
-#     volume = texto_fala.getProperty('volume')
-#     texto_fala.setProperty(volume, 1.0)
+    volume = texto_fala.getProperty('volume')
+    texto_fala.setProperty(volume, 1.0)
 
-#     voices = texto_fala.getProperty('voices')
-#     texto_fala.setProperty('voice', voices[0].id)
+    voices = texto_fala.getProperty('voices')
+    texto_fala.setProperty('voice', voices[0].id)
 
-#     texto_fala.say(audio)
-#     texto_fala.runAndWait()
+    texto_fala.say(audio)
+    texto_fala.runAndWait()
 
 def textMode():
     global text_mode
     text_mode = not text_mode
 
-# def microfone():
-#     r = sr.Recognizer()
+def microfone():
+    r = sr.Recognizer()
 
-#     with sr.Microphone() as mic:
-#         r.pause_threshold = 1
-#         r.adjust_for_ambient_noise(mic)
-#         audio = r.listen(mic)
+    with sr.Microphone() as mic:
+        r.pause_threshold = 1
+        r.adjust_for_ambient_noise(mic)
+        audio = r.listen(mic)
 
-#     try:
-#         print("Reconhecendo...")
-#         comando = r.recognize_google(audio, language='pt-BR')
-#         print(comando)
+    try:
+        print("Reconhecendo...")
+        comando = r.recognize_google(audio, language='pt-BR')
+        print(comando)
 
-#     except Exception as e:
-#         print(e)
-#         print("Por favor repita, não te escutei!")
+    except Exception as e:
+        print(e)
+        print("Por favor repita, não te escutei!")
 
-#         return "None"
+        return "None"
 
-#    return comando
 
 def openia(fala):
     return ('Pesquisa por OPENAI desativada por enquanto...')
@@ -125,20 +124,19 @@ def searchKey(dc, keywords, comando):
 
     return -1
 
-# def ouvir():
-#     print('escutando microfone...')
-#     listener = sr.Recognizer()
-#     sr.Microphone.list_microphone_names()
+def ouvir():
+    print('escutando microfone...')
+    listener = sr.Recognizer()
+    sr.Microphone.list_microphone_names()
 
-#     try:
-#         with sr.Microphone(device_index=1) as source:
-#             print('Listening...')
-#             voice = listener.listen(source)
-#             command = listener.recognize_google(voice, language='pt-PT')
-#             print(command)
-#             return command
-#     except:
-#         return 'No Sound'
+    try:
+        with sr.Microphone(device_index=1) as source:
+            print('Listening...')
+            voice = listener.listen(source)
+            command = listener.recognize_google(voice, language='pt-PT')
+            return command
+    except:
+        return 'No Sound'
 
 def spotify():
     return 'spotify desativado por enquanto'
@@ -330,9 +328,3 @@ def analisar_input(input_usuario):
         return openia(input_usuario)
     
     return resposta
-
-
-def escutarVoz():
-    retorno = input("voz do usuario >> ")
-
-    return retorno

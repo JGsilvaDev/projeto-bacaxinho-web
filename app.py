@@ -113,7 +113,7 @@ def get_login():
 def get_voice():
     global retorno, emocao, voiceChat
 
-    voiceChat = fc.escutarVoz()
+    voiceChat = fc.ouvir()
 
     retorno = fc.analisar_input(voiceChat)
 
