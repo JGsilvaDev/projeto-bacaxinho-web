@@ -112,9 +112,29 @@ def microfone():
 
         return "None"
 
-
 def openia(fala):
     return ('Pesquisa por OPENAI desativada por enquanto...')
+
+    # op.api_key = 'token'
+
+    # model_engine = 'text-davinci-003'
+
+    # while True:
+    #     prompt = fala
+
+    #     completion = op.Completion.create(
+    #         engine=model_engine,
+    #         prompt=prompt,
+    #         max_tokens=1024,
+    #         temperature=0.5
+    #     )
+
+    #     response = completion.choices[0].text
+    #     falar(response)
+    #     # print(response)
+
+    #     if 'sair' in prompt:
+    #         break
 
 def searchKey(dc, keywords, comando):
 
