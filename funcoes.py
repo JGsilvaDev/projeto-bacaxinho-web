@@ -67,6 +67,11 @@ def ultimoSentimento(id):
 #capturando a emoção atual
 emocao_atual = ultimoSentimento(identificador_usuario) #pegar última do banco
 
+#removendo acentos
+def remover_acentos(texto):
+    texto_sem_acentos = unidecode(texto)
+    return texto_sem_acentos
+
 # funcoes de configuração
 
 def falar(audio):
