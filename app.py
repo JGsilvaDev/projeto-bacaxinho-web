@@ -48,11 +48,13 @@ def atualizar_dados():
     global retorno, emocao
     input = request.form['usermsg']
 
-    retorno = fc.analisar_input(input)
+    inputSemAcento = fc.remover_acentos(str(input))
+    
+    retorno = fc.analisar_input(inputSemAcento)
 
-    emocao = fc.analisarFrase(input,fc.identificador_usuario)
+    emocao = fc.analisarFrase(inputSemAcento,fc.identificador_usuario)
 
-    print('o usuario disse: '+input+' e o bot entendeu como: '+emocao)
+    print('o usuario disse: '+inputSemAcento+' e o bot entendeu como: '+emocao)
 
     es.enviarSerial(emocao)
 
@@ -114,12 +116,14 @@ def get_voice():
     global retorno, emocao, voiceChat
 
     voiceChat = fc.ouvir()
+    
+    voiceChatSemAcento = fc.remover_acentos(str(voiceChat))
 
-    retorno = fc.analisar_input(voiceChat)
+    retorno = fc.analisar_input(voiceChatSemAcento)
 
-    emocao = fc.analisarFrase(voiceChat,fc.identificador_usuario)
+    emocao = fc.analisarFrase(voiceChatSemAcento,fc.identificador_usuario)
 
-    print('o usuario disse: '+voiceChat+' e o bot entendeu como: '+emocao)
+    print('o usuario disse: '+voiceChatSemAcento+' e o bot entendeu como: '+emocao)
 
     es.enviarSerial(emocao)
 
