@@ -4,30 +4,28 @@ import speech_recognition as sr
 import os
 import webbrowser as wb
 import openai as op
-
-from unidecode import unidecode
-
 import sqlite3
 import datetime
+import leitor_tensorflow as tf
+import nltk
+import json
+
+from unidecode import unidecode
+from tensorflow.keras.models import load_model
+
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+from nltk.stem import WordNetLemmatizer
 
 # import spotipy
 # from spotipy.oauth2 import SpotifyOAuth
 
 # from googletrans import Translator
 
-from tensorflow.keras.models import load_model
-import leitor_tensorflow as tf
-
-import nltk
-from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
-from nltk.stem import WordNetLemmatizer
-
 nltk.download('punkt')
 nltk.download('stopwords')
 nltk.download('wordnet')
 
-import json
 
 
 texto_fala = py.init()
@@ -174,7 +172,7 @@ def endapp():
     exit()
 
 def tempo():
-    Tempo = dt.datetime.now().strftime("%I:%M")
+    Tempo = dt.datetime.now().strftime("%H:%M")
     return ("Agora são: " + Tempo)
 
 def data():

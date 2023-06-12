@@ -25,7 +25,7 @@
 
         # ao chamar
         #while True:
-        print("Escutando...")
+        # print("Escutando...")
 
  #       comando=fc.recebeInput()
 
