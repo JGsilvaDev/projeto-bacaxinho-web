@@ -32,10 +32,6 @@
         "funcao": "quemsoueu()"
     },
     {
-        "indice": ["spotify","spotfi"],
-        "funcao": "spotify()"
-    },
-    {
         "indice": ["codigo","fonte","codigo fonte"],
         "funcao": "codigofonte()"
     },

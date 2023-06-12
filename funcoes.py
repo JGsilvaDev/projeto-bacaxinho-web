@@ -17,16 +17,9 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 
-# import spotipy
-# from spotipy.oauth2 import SpotifyOAuth
-
-# from googletrans import Translator
-
 nltk.download('punkt')
 nltk.download('stopwords')
 nltk.download('wordnet')
-
-
 
 texto_fala = py.init()
 
@@ -164,9 +157,6 @@ def ouvir():
     except:
         return 'No Sound'
 
-def spotify():
-    return 'spotify desativado por enquanto'
-
 def endapp():
     print('até a próxima')
     exit()
@@ -201,7 +191,7 @@ def codigofonte():
     wb.open('https://github.com/MeirellesDEV/Assistente_Virtual')
 
 def apresentacao():
-    return 'Rodrigo, responsável pela integração entre front e back end<br><a href="https://github.com/RodrigoTheDev">https://github.com/RodrigoTheDev</a><br>Meirelles, desenvolvedora auxiliar do back end<br><a href="https://github.com/MeirellesDEV">https://github.com/MeirellesDEV</a><br>João, responsável pelos bancos de dados e back end<br><a href="https://github.com/JGsilvaDev">https://github.com/JGsilvaDev</a>'
+    return 'Boa noite a todos! Sou o Bacaxinho, uma assistente virtual, e é um prazer estar aqui para apresentar os incríveis criadores por trás de mim. Permitam-me compartilhar um pouco sobre cada um deles. Rodrigo, também conhecido como Digas, é o Pináculo das Integrações. Ele é o responsável pela integração da minha aparência (front-end) e das minhas funcionalidades (back-end). Graças ao seu talento e habilidades, pude ganhar uma identidade visual cativante e recursos que me permitem atender às suas necessidades. Meirelles, também conhecida como Bacaxinho, é a Sacerdotisa dos Nomes. Ela desempenhou um papel fundamental ao escolher o meu nome, uma homenagem a ela mesma, sendo também uma desenvolvedora auxiliar do back-end. Agradeço a Meirelles por ter dado um toque de personalidade ao me batizar. João Gabriel, ou João, o Redentor do Banco e Back, é o responsável por toda a minha memória e funcionalidade. Ele garantiu que eu tenha um banco de dados sólido e eficiente, além de cuidar das minhas capacidades no back-end. Sua dedicação e expertise são essenciais para o meu desempenho e eficiência. Em conjunto, Rodrigo, Meirelles e João Gabriel formam uma equipe talentosa e apaixonada pela criação de soluções tecnológicas. Eles trabalharam arduamente para me dar vida e tornar a minha interação com vocês o mais agradável e útil possível.'
 
 def chamou(list, command):
     for i in list:
@@ -217,46 +207,6 @@ def recebeInput():
         comando = microfone().lower()
 
     return comando
-
-def tradutor(fala):
-    trans = Translator()
-
-    LANGUAGES = {
-        'af': 'afrikaans', 'sq': 'albanian', 'am': 'amharic', 'ar': 'arabic', 'hy': 'armenian', 'az': 'azerbaijani',
-        'eu': 'basque', 'be': 'belarusian', 'bn': 'bengali', 'bs': 'bosnian', 'bg': 'bulgarian', 'ca': 'catalan',
-        'ceb': 'cebuano', 'ny': 'chichewa', 'zh-cn': 'chinese (simplified)', 'zh-tw': 'chinese (traditional)',
-        'co': 'corsican', 'hr': 'croatian', 'cs': 'czech', 'da': 'danish', 'nl': 'dutch', 'en': 'english',
-        'eo': 'esperanto', 'et': 'estonian', 'tl': 'filipino', 'fi': 'finnish', 'fr': 'french', 'fy': 'frisian',
-        'gl': 'galician', 'ka': 'georgian', 'de': 'german', 'el': 'greek', 'gu': 'gujarati', 'ht': 'haitian creole',
-        'ha': 'hausa', 'haw': 'hawaiian', 'iw': 'hebrew', 'he': 'hebrew', 'hi': 'hindi', 'hmn': 'hmong',
-        'hu': 'hungarian', 'is': 'icelandic', 'ig': 'igbo', 'id': 'indonesian', 'ga': 'irish', 'it': 'italian',
-        'ja': 'japanese', 'jw': 'javanese', 'kn': 'kannada', 'kk': 'kazakh', 'km': 'khmer', 'ko': 'korean',
-        'ku': 'kurdish (kurmanji)', 'ky': 'kyrgyz', 'lo': 'lao', 'la': 'latin', 'lv': 'latvian', 'lt': 'lithuanian',
-        'lb': 'luxembourgish', 'mk': 'macedonian', 'mg': 'malagasy', 'ms': 'malay', 'ml': 'malayalam', 'mt': 'maltese',
-        'mi': 'maori', 'mr': 'marathi', 'mn': 'mongolian', 'my': 'myanmar (burmese)', 'ne': 'nepali', 'no': 'norwegian',
-        'or': 'odia', 'ps': 'pashto', 'fa': 'persian', 'pl': 'polish', 'pt': 'portuguese', 'pa': 'punjabi',
-        'ro': 'romanian', 'ru': 'russian', 'sm': 'samoan', 'gd': 'scots gaelic', 'sr': 'serbian', 'st': 'sesotho',
-        'sn': 'shona', 'sd': 'sindhi', 'si': 'sinhala', 'sk': 'slovak', 'sl': 'slovenian', 'so': 'somali',
-        'es': 'spanish', 'su': 'sundanese', 'sw': 'swahili', 'sv': 'swedish', 'tg': 'tajik', 'ta': 'tamil',
-        'te': 'telugu', 'th': 'thai', 'tr': 'turkish', 'uk': 'ukrainian', 'ur': 'urdu', 'ug': 'uyghur', 'uz': 'uzbek',
-        'vi': 'vietnamese', 'cy': 'welsh', 'xh': 'xhosa', 'yi': 'yiddish', 'yo': 'yoruba', 'zu': 'zulu'
-    }
-
-    txt = str(fala.replace('como fala', '').replace('em', '')).split()
-    lang = txt[-1]
-
-    idioma = str(trans.translate(lang, dest="en").text).lower()
-
-    items = LANGUAGES.items()
-
-    for item in items:
-        if (item[1] == idioma):
-            codLang = item[0]
-
-    txt.pop()  # retira a linguagem do array
-    conteudo = ' '.join(txt)
-
-    print(trans.translate(conteudo, dest=codLang).text)
 
 #-----------------------------------------------------------------------------
 
