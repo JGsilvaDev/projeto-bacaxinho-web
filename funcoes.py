@@ -5,6 +5,8 @@ import os
 import webbrowser as wb
 import openai as op
 
+from unidecode import unidecode
+
 import sqlite3
 import datetime
 
@@ -77,7 +79,10 @@ def remover_acentos(texto):
 def falar(audio):
 
     # print do que o robo falar, para funções de debug
-    print(bot_name+': ' + audio)
+    # print(bot_name+': ' + audio)
+
+    if texto_fala._inLoop:
+        texto_fala.endLoop()
 
     rate = texto_fala.getProperty('rate')
     texto_fala.setProperty(rate, 999)

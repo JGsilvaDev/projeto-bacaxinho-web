@@ -4,6 +4,7 @@ from py_scripts import userManager as uman
 from py_scripts import emissorSerial as es
 
 import funcoes as fc #funções do bacaxinho
+import threading
 
 retorno = None
 voiceChat = None
@@ -47,6 +48,7 @@ def cadastro():
 def atualizar_dados():
     global retorno, emocao
     input = request.form['usermsg']
+    fala = request.form['fala']
 
     inputSemAcento = fc.remover_acentos(str(input))
     
@@ -57,6 +59,11 @@ def atualizar_dados():
     print('o usuario disse: '+inputSemAcento+' e o bot entendeu como: '+emocao)
 
     es.enviarSerial(emocao)
+
+    if(fala == "True"):
+        # Executar fc.falar(retorno) em uma thread separada
+        thread_fala = threading.Thread(target=fc.falar, args=(retorno,))
+        thread_fala.start()
 
     return jsonify({'status': 'OK'})
 

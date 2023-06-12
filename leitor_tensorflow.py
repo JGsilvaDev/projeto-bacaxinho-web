@@ -101,5 +101,5 @@ def sentimento(alegria, raiva, tristeza, neutro):
 
 
 #funções para treinar e salvar dados
-#train(13)
-#save()
+# train(13)
+# save()

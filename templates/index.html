@@ -17,7 +17,15 @@
 
     <div id="container">
         <div id="title-card">
-            <h1 id="titulo">Olá! Eu sou o bacaxinho</h1>
+            <div id="titulo">
+                <h1 id="titulo">Olá! Eu sou o bacaxinho</h1>
+            </div>
+
+            <div class="switch__container">
+                <input id="switch-shadow" class="switch switch--shadow" type="checkbox" />
+                <label for="switch-shadow"></label>
+            </div>
+
         </div>
         <div id="chat-container-frame">
             
@@ -28,6 +36,7 @@
         <form id="meu_formulario">
             <div id="input-container" >
                 <input type="text" name="usermsg" id="input-text" placeholder="Digite aqui" spellcheck="false" autocomplete="off">
+                <input type="text" name="fala" id="input-fala" style="display: none;">
                 <button id="modo-fala" onclick="ouvindo(true)" type="button">
                     <object data="{{ url_for('static', filename='imgsrc/microfone.svg') }}" type="image/svg+xml" id="meuSvg" width="25%"></object>
                 </button>
@@ -143,6 +152,22 @@
                 }
             });
         });
+    });
+</script>
+
+<script>
+    const checkbox = document.getElementById('switch-shadow');
+    const fala = document.getElementById('input-fala');
+
+    checkbox.addEventListener('click', function() {
+
+        if (this.checked) {
+            fala.value = "True";
+            console.log(fala.value);
+        } else {
+            fala.value = "False";
+            console.log(fala.value);
+        }
     });
 </script>
 
